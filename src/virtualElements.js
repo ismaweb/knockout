@@ -81,7 +81,10 @@
         allowedBindings: {},
 
         childNodes: function(node) {
-            return isStartComment(node) ? getVirtualChildren(node) : node.childNodes;
+        	if(node.nodeName == "CANVAS" && paper) 
+        		return paper.project.activeLayer.children;
+        	
+            return isStartComment(node) ? getVirtualChildren(node) : (node.childNodes || node.children);
         },
 
         emptyNode: function(node) {
@@ -134,7 +137,7 @@
 
         firstChild: function(node) {
             if (!isStartComment(node))
-                return node.firstChild;
+                return node.nodeName == 'CANVAS' ? paper.project.activeLayer.firstChild : node.firstChild;
             if (!node.nextSibling || isEndComment(node.nextSibling))
                 return null;
             return node.nextSibling;

@@ -10,6 +10,7 @@
             switch (node.nodeType) {
                 case 1: return node.getAttribute(defaultBindingAttributeName) != null;   // Element
                 case 8: return ko.virtualElements.hasBindingValue(node); // Comment node
+                case 100: return typeof node.data.bind != "undefined";
                 default: return false;
             }
         },
@@ -30,6 +31,7 @@
             switch (node.nodeType) {
                 case 1: return node.getAttribute(defaultBindingAttributeName);   // Element
                 case 8: return ko.virtualElements.virtualNodeBindingValue(node); // Comment node
+                case 100: return node.data.bind;
                 default: return null;
             }
         },
